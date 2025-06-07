@@ -1,0 +1,121 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Edit' : 'Add' }} Staff Member</h2>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <form [formGroup]="staffForm" (ngSubmit)="onSubmit()" class="mt-4">
+    <div class="row">
+      <!-- Personal Information -->
+      <div class="col-md-6">
+        <h4>Personal Information</h4>
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName">
+          <div *ngIf="staffForm.get('firstName')?.invalid && staffForm.get('firstName')?.touched" class="text-danger">
+            First name is required
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName">
+          <div *ngIf="staffForm.get('lastName')?.invalid && staffForm.get('lastName')?.touched" class="text-danger">
+            Last name is required
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+          <div *ngIf="staffForm.get('email')?.invalid && staffForm.get('email')?.touched" class="text-danger">
+            <span *ngIf="staffForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="staffForm.get('email')?.errors?.['email']">Invalid email format</span>
+          </div>
+        </div>
+
+        <div class="mb-3" *ngIf="!isEditMode">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password">
+          <div *ngIf="staffForm.get('password')?.invalid && staffForm.get('password')?.touched" class="text-danger">
+            <span *ngIf="staffForm.get('password')?.errors?.['required']">Password is required</span>
+            <span *ngIf="staffForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+          <div *ngIf="staffForm.get('phoneNumber')?.invalid && staffForm.get('phoneNumber')?.touched" class="text-danger">
+            Phone number is required
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <textarea class="form-control" id="address" formControlName="address" rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- Professional Information -->
+      <div class="col-md-6">
+        <h4>Professional Information</h4>
+        <div class="mb-3">
+          <label for="role" class="form-label">Role</label>
+          <select class="form-select" id="role" formControlName="role" (change)="onRoleChange()">
+            <option value="">Select Role</option>
+            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          </select>
+          <div *ngIf="staffForm.get('role')?.invalid && staffForm.get('role')?.touched" class="text-danger">
+            Role is required
+          </div>
+        </div>
+
+        <!-- Doctor-specific fields -->
+        <ng-container *ngIf="staffForm.get('role')?.value === 'ROLE_DOCTOR'">
+          <div class="mb-3">
+            <label for="specialization" class="form-label">Specialization</label>
+            <input type="text" class="form-control" id="specialization" formControlName="specialization">
+            <div *ngIf="staffForm.get('specialization')?.invalid && staffForm.get('specialization')?.touched" class="text-danger">
+              Specialization is required for doctors
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="licenseNumber" class="form-label">License Number</label>
+            <input type="text" class="form-control" id="licenseNumber" formControlName="licenseNumber">
+            <div *ngIf="staffForm.get('licenseNumber')?.invalid && staffForm.get('licenseNumber')?.touched" class="text-danger">
+              License number is required for doctors
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Secretary/Nurse-specific fields -->
+        <ng-container *ngIf="staffForm.get('role')?.value === 'ROLE_SECRETARY'">
+          <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            <input type="text" class="form-control" id="department" formControlName="department">
+            <div *ngIf="staffForm.get('department')?.invalid && staffForm.get('department')?.touched" class="text-danger">
+              Department is required for secretaries/nurses
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="position" class="form-label">Position</label>
+            <input type="text" class="form-control" id="position" formControlName="position">
+            <div *ngIf="staffForm.get('position')?.invalid && staffForm.get('position')?.touched" class="text-danger">
+              Position is required for secretaries/nurses
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="staffForm.invalid || loading">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{ isEditMode ? 'Update' : 'Create' }} Staff Member
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

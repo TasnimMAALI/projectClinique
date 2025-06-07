@@ -1,0 +1,85 @@
+<div class="container mt-4">
+  <h2>{{ isEdit ? 'Edit' : 'New' }} Medical Record</h2>
+
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+  <form [formGroup]="medicalRecordForm" (ngSubmit)="onSubmit()" class="mt-4">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="patientId" class="form-label">Patient</label>
+        <select class="form-select" id="patientId" formControlName="patientId">
+          <option value="">Select Patient</option>
+          <!-- Add patient options dynamically -->
+        </select>
+        <div class="invalid-feedback" *ngIf="medicalRecordForm.get('patientId')?.errors?.['required'] && 
+             medicalRecordForm.get('patientId')?.touched">
+          Patient is required
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="doctorId" class="form-label">Doctor</label>
+        <select class="form-select" id="doctorId" formControlName="doctorId">
+          <option value="">Select Doctor</option>
+          <!-- Add doctor options dynamically -->
+        </select>
+        <div class="invalid-feedback" *ngIf="medicalRecordForm.get('doctorId')?.errors?.['required'] && 
+             medicalRecordForm.get('doctorId')?.touched">
+          Doctor is required
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="diagnosis" class="form-label">Diagnosis</label>
+      <textarea class="form-control" id="diagnosis" rows="3" formControlName="diagnosis"></textarea>
+      <div class="invalid-feedback" *ngIf="medicalRecordForm.get('diagnosis')?.errors?.['required'] && 
+           medicalRecordForm.get('diagnosis')?.touched">
+        Diagnosis is required
+      </div>
+      <div class="invalid-feedback" *ngIf="medicalRecordForm.get('diagnosis')?.errors?.['maxlength']">
+        Diagnosis must be less than 1000 characters
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="prescription" class="form-label">Prescription</label>
+      <textarea class="form-control" id="prescription" rows="3" formControlName="prescription"></textarea>
+      <div class="invalid-feedback" *ngIf="medicalRecordForm.get('prescription')?.errors?.['required'] && 
+           medicalRecordForm.get('prescription')?.touched">
+        Prescription is required
+      </div>
+      <div class="invalid-feedback" *ngIf="medicalRecordForm.get('prescription')?.errors?.['maxlength']">
+        Prescription must be less than 1000 characters
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="treatmentPlan" class="form-label">Treatment Plan</label>
+      <textarea class="form-control" id="treatmentPlan" rows="3" formControlName="treatmentPlan"></textarea>
+      <div class="invalid-feedback" *ngIf="medicalRecordForm.get('treatmentPlan')?.errors?.['required'] && 
+           medicalRecordForm.get('treatmentPlan')?.touched">
+        Treatment plan is required
+      </div>
+      <div class="invalid-feedback" *ngIf="medicalRecordForm.get('treatmentPlan')?.errors?.['maxlength']">
+        Treatment plan must be less than 1000 characters
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="notes" class="form-label">Notes</label>
+      <textarea class="form-control" id="notes" rows="3" formControlName="notes"></textarea>
+      <div class="invalid-feedback" *ngIf="medicalRecordForm.get('notes')?.errors?.['maxlength']">
+        Notes must be less than 1000 characters
+      </div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary" [disabled]="medicalRecordForm.invalid || loading">
+        <span class="spinner-border spinner-border-sm me-1" *ngIf="loading"></span>
+        {{ isEdit ? 'Update' : 'Create' }} Medical Record
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

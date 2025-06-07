@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <h2>{{ isEdit ? 'Edit' : 'New' }} Appointment</h2>
+
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" class="mt-4">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="patientId" class="form-label">Patient</label>
+        <select class="form-select" id="patientId" formControlName="patientId">
+          <option value="">Select Patient</option>
+          <!-- Add patient options dynamically -->
+        </select>
+        <div class="invalid-feedback" *ngIf="appointmentForm.get('patientId')?.errors?.['required'] && 
+             appointmentForm.get('patientId')?.touched">
+          Patient is required
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="doctorId" class="form-label">Doctor</label>
+        <select class="form-select" id="doctorId" formControlName="doctorId">
+          <option value="">Select Doctor</option>
+          <!-- Add doctor options dynamically -->
+        </select>
+        <div class="invalid-feedback" *ngIf="appointmentForm.get('doctorId')?.errors?.['required'] && 
+             appointmentForm.get('doctorId')?.touched">
+          Doctor is required
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="appointmentDateTime" class="form-label">Date & Time</label>
+        <input type="datetime-local" class="form-control" id="appointmentDateTime" 
+               formControlName="appointmentDateTime">
+        <div class="invalid-feedback" *ngIf="appointmentForm.get('appointmentDateTime')?.errors?.['required'] && 
+             appointmentForm.get('appointmentDateTime')?.touched">
+          Date and time are required
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" formControlName="status">
+          <option *ngFor="let status of statuses" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="reason" class="form-label">Reason</label>
+      <textarea class="form-control" id="reason" rows="3" formControlName="reason"></textarea>
+      <div class="invalid-feedback" *ngIf="appointmentForm.get('reason')?.errors?.['required'] && 
+           appointmentForm.get('reason')?.touched">
+        Reason is required
+      </div>
+      <div class="invalid-feedback" *ngIf="appointmentForm.get('reason')?.errors?.['maxlength']">
+        Reason must be less than 500 characters
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="notes" class="form-label">Notes</label>
+      <textarea class="form-control" id="notes" rows="3" formControlName="notes"></textarea>
+      <div class="invalid-feedback" *ngIf="appointmentForm.get('notes')?.errors?.['maxlength']">
+        Notes must be less than 1000 characters
+      </div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary" [disabled]="appointmentForm.invalid || loading">
+        <span class="spinner-border spinner-border-sm me-1" *ngIf="loading"></span>
+        {{ isEdit ? 'Update' : 'Create' }} Appointment
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

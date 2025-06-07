@@ -1,0 +1,28 @@
+.form-control, .form-select {
+  &.ng-invalid.ng-touched {
+    border-color: #dc3545;
+  }
+}
+
+.text-danger {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+h4 {
+  color: #495057;
+  margin-bottom: 1.5rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.btn-primary {
+  min-width: 140px;
+}
+
+.spinner-border-sm {
+  margin-right: 0.5rem;
+}

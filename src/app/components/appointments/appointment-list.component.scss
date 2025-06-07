@@ -1,0 +1,24 @@
+.table {
+  th {
+    background-color: #f8f9fa;
+  }
+  
+  td {
+    vertical-align: middle;
+  }
+}
+
+.btn-group {
+  .btn {
+    padding: 0.25rem 0.5rem;
+    
+    i {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.badge {
+  padding: 0.5em 0.75em;
+  font-size: 0.875em;
+}

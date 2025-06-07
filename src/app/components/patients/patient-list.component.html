@@ -1,0 +1,98 @@
+<div class="container mt-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Patients</h2>
+    <button class="btn btn-primary" routerLink="/patients/new">
+      <i class="bi bi-plus"></i> Add New Patient
+    </button>
+  </div>
+
+  <!-- Error Alert -->
+  <div class="alert alert-danger" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <!-- Search and Filter Controls -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search by name or email"
+              [(ngModel)]="searchTerm"
+              (input)="onSearch()"
+            >
+            <button class="btn btn-outline-secondary" type="button">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select
+            class="form-select"
+            [(ngModel)]="selectedBloodGroup"
+            (change)="onBloodGroupChange()"
+          >
+            <option value="">All Blood Groups</option>
+            <option *ngFor="let group of bloodGroups" [value]="group">{{ group }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Patients Table -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Date of Birth</th>
+              <th>Blood Group</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="loading">
+              <td colspan="6" class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="!loading && patients.length === 0">
+              <td colspan="6" class="text-center">No patients found</td>
+            </tr>
+            <tr *ngFor="let patient of patients">
+              <td>{{ patient.firstName }} {{ patient.lastName }}</td>
+              <td>{{ patient.email }}</td>
+              <td>{{ patient.phoneNumber || 'N/A' }}</td>
+              <td>{{ patient.dateOfBirth | date }}</td>
+              <td>{{ patient.bloodGroup || 'N/A' }}</td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-outline-primary" (click)="viewPatient(patient.id!)">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary" (click)="editPatient(patient.id!)">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deletePatient(patient.id!)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

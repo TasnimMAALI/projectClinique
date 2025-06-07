@@ -1,0 +1,107 @@
+<div class="dashboard-container">
+  <div class="welcome-section mb-4">
+    <h2>{{ welcomeMessage }}</h2>
+    <p class="text-muted">Clinic Management System Dashboard</p>
+  </div>
+
+  <div class="row" *ngIf="currentUser$ | async as user">
+    <!-- Admin Dashboard -->
+    <ng-container *ngIf="user.role === Role.ROLE_ADMIN">
+      <div class="col-md-4 mb-4">
+        <div class="card dashboard-card">
+          <div class="card-body">
+            <h5 class="card-title">Staff Management</h5>
+            <p class="card-text">Manage doctors, nurses, and other staff members</p>
+            <a routerLink="/staff" class="btn btn-primary">Manage Staff</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card dashboard-card">
+          <div class="card-body">
+            <h5 class="card-title">User Management</h5>
+            <p class="card-text">Manage user accounts and permissions</p>
+            <a routerLink="/users" class="btn btn-primary">Manage Users</a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Doctor Dashboard -->
+    <ng-container *ngIf="user.role === Role.ROLE_DOCTOR">
+      <div class="col-md-4 mb-4">
+        <div class="card dashboard-card">
+          <div class="card-body">
+            <h5 class="card-title">My Appointments</h5>
+            <p class="card-text">View and manage your appointments</p>
+            <a routerLink="/appointments" class="btn btn-primary">View Appointments</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card dashboard-card">
+          <div class="card-body">
+            <h5 class="card-title">Patient Records</h5>
+            <p class="card-text">Access and manage patient medical records</p>
+            <a routerLink="/medical-records" class="btn btn-primary">View Records</a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Secretary Dashboard -->
+    <ng-container *ngIf="user.role === Role.ROLE_SECRETARY">
+      <div class="col-md-4 mb-4">
+        <div class="card dashboard-card">
+          <div class="card-body">
+            <h5 class="card-title">Appointment Management</h5>
+            <p class="card-text">Schedule and manage appointments</p>
+            <a routerLink="/appointments" class="btn btn-primary">Manage Appointments</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card dashboard-card">
+          <div class="card-body">
+            <h5 class="card-title">Patient Management</h5>
+            <p class="card-text">Register and manage patient information</p>
+            <a routerLink="/patients" class="btn btn-primary">Manage Patients</a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Patient Dashboard -->
+    <ng-container *ngIf="user.role === Role.ROLE_PATIENT">
+      <div class="col-md-4 mb-4">
+        <div class="card dashboard-card">
+          <div class="card-body">
+            <h5 class="card-title">My Appointments</h5>
+            <p class="card-text">View and schedule appointments</p>
+            <a routerLink="/appointments" class="btn btn-primary">View Appointments</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card dashboard-card">
+          <div class="card-body">
+            <h5 class="card-title">Medical History</h5>
+            <p class="card-text">View your medical history and records</p>
+            <a routerLink="/medical-history" class="btn btn-primary">View History</a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Common Features -->
+    <div class="col-md-4 mb-4">
+      <div class="card dashboard-card">
+        <div class="card-body">
+          <h5 class="card-title">Profile Settings</h5>
+          <p class="card-text">Update your personal information</p>
+          <a routerLink="/profile" class="btn btn-primary">Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
