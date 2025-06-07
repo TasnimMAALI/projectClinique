@@ -1,0 +1,3 @@
+com\clinique\controller\UserControllerTest.class
+com\clinique\service\UserServiceTest.class
+com\clinique\config\TestConfig.class
